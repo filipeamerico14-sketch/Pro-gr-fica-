@@ -1,0 +1,23 @@
+{
+  "shop": {
+    "name": "PRO GRÁFICA",
+    "tagline": "IMPRESSÃO • DESIGN • SERVIÇOS",
+    "currency": "AOA",
+    "whatsappPlaceholder": "2449XXXXXXXX"
+  },
+  "defaultServices": [
+    {"name":"Impressão e cópias","desc":"Documentos a preto e branco ou a cores.","price":"A confirmar"},
+    {"name":"Design gráfico","desc":"Criação e preparação de artes gráficas.","price":"A confirmar"},
+    {"name":"Cartões e convites","desc":"Materiais personalizados para eventos.","price":"A confirmar"},
+    {"name":"Digitalização","desc":"Conversão de documentos para ficheiros digitais.","price":"A confirmar"},
+    {"name":"Encadernação","desc":"Organização e acabamento de documentos.","price":"A confirmar"},
+    {"name":"Plastificação","desc":"Proteção e acabamento de documentos.","price":"A confirmar"}
+  ],
+  "roles": {
+    "cliente": ["Visão geral","Novo pedido","Os meus pedidos","Documentos finais","Pagamentos","Atendimento"],
+    "funcionario": ["Visão geral","Pedidos","Atendimento","Serviços"],
+    "admin": ["Visão geral","Pedidos","Atendimento","Serviços","Equipa","Relatórios","Publicidade","Configurações","Pagamentos"]
+  },
+  "orderStatuses": ["Recebido","Em produção","A aguardar pagamento","Concluído"],
+  "paymentStatuses": ["Pendente","Comprovativo enviado","Pago"]
+}

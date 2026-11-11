@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101b35">
+  <title>PRO GRÁFICA — Portal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><div class="logo">PG</div><div>PRO GRÁFICA<small>IMPRESSÃO • DESIGN • SERVIÇOS</small></div></div>
+  <div class="top-actions"><button class="btn ghost" id="roleLabel" onclick="openLogin()">Entrar</button><button class="btn gold" onclick="openLogin()">Minha conta</button></div>
+</header>
+<main class="wrap">
+  <section id="publicHome">
+    <div class="hero">
+      <div><div class="eyebrow">QUALIDADE EM CADA IMPRESSÃO</div><h1>As tuas ideias<br>ganham forma.</h1><p>Envia os teus documentos, acompanha os pedidos e recebe os trabalhos finalizados através do portal PRO GRÁFICA.</p><div class="action-row"><button class="btn gold" onclick="openLogin()">Enviar documento</button><button class="btn ghost" onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})">Ver serviços</button></div></div>
+      <div class="hero-art"><div><strong>PG</strong><span>PRO GRÁFICA</span><p class="small">A tua gráfica, agora online</p></div></div>
+    </div>
+    <div class="section-head" id="catalogo"><div><div class="eyebrow">O QUE FAZEMOS</div><h2>Catálogo de serviços</h2></div><span class="muted small">Preços a confirmar pela gráfica</span></div>
+    <div class="grid" id="publicServices"></div>
+    <div class="section-head"><div><div class="eyebrow">INFORMAÇÃO</div><h2>Como funciona</h2></div></div>
+    <div class="grid">
+      <div class="card"><div class="service-icon">📤</div><h3>1. Envia</h3><p class="muted small">Cria a tua conta e anexa o documento que pretendes imprimir ou tratar.</p></div>
+      <div class="card"><div class="service-icon">🖨️</div><h3>2. Acompanhamos</h3><p class="muted small">A equipa analisa o pedido e atualiza o estado do trabalho.</p></div>
+      <div class="card"><div class="service-icon">📥</div><h3>3. Recebe</h3><p class="muted small">Descarrega o ficheiro final ou levanta o trabalho presencialmente.</p></div>
+    </div>
+  </section>
+
+  <section id="loginView" class="login hidden">
+    <div class="card">
+      <div class="eyebrow">ÁREA RESERVADA</div><h2 id="loginTitle">Entrar na PRO GRÁFICA</h2>
+      <div class="notice">Esta é uma demonstração local. O código SMS real, as contas seguras e o envio online serão ligados ao servidor na próxima fase.</div>
+      <div class="field"><label>Nome completo</label><input id="loginName" placeholder="O teu nome"></div>
+      <div class="field"><label>Número de telefone</label><input id="loginPhone" placeholder="+244 9XX XXX XXX"></div>
+      <div class="field"><label>Entrar como (demonstração)</label><select id="loginRole"><option value="cliente">Cliente</option><option value="funcionario">Funcionário</option><option value="admin">Administrador</option></select></div>
+      <div class="action-row"><button class="btn" onclick="login()">Continuar</button><button class="btn secondary" onclick="showHome()">Voltar</button></div>
+      <p class="small muted">Na versão publicada, o acesso de funcionários e administradores será protegido e não poderá ser escolhido livremente pelo visitante.</p>
+    </div>
+  </section>
+
+  <section id="dashboard" class="hidden">
+    <div class="panel-title"><div><div class="eyebrow">PORTAL PRO GRÁFICA</div><h2 id="welcome">A tua área</h2><span class="muted small" id="accountInfo"></span></div><button class="btn secondary" onclick="logout()">Sair</button></div>
+    <div class="layout">
+      <aside class="sidebar" id="sideNav"></aside>
+      <div class="panel">
+        <section id="view-overview">
+          <div class="stats" id="stats"></div>
+          <div class="section-head"><h2>Atividade recente</h2></div>
+          <div class="card table-wrap"><table class="table"><thead><tr><th>Pedido</th><th>Serviço</th><th>Estado</th><th>Pagamento</th></tr></thead><tbody id="recentRows"></tbody></table></div>
+        </section>
+        <section id="view-neworder" class="hidden">
+          <div class="panel-title"><h2>Novo pedido</h2></div>
+          <div class="notice">Anexa o ficheiro nesta demonstração. Ele fica apenas no teu navegador; para a equipa receber de qualquer dispositivo será necessário armazenamento online.</div>
+          <div class="card">
+            <div class="row"><div class="field"><label>Serviço</label><select id="orderService"></select></div><div class="field"><label>Quantidade</label><input id="orderQty" type="number" min="1" value="1"></div></div>
+            <div class="field"><label>Descrição / instruções</label><textarea id="orderNote" rows="3" placeholder="Indica tamanho, cor, acabamento ou outros detalhes..."></textarea></div>
+            <div class="field"><label>Documento (PDF, imagem ou outro ficheiro)</label><input id="orderFile" type="file"><div id="selectedFile" class="filelist"></div></div>
+            <button class="btn" onclick="createOrder()">Enviar pedido</button>
+          </div>
+        </section>
+        <section id="view-orders" class="hidden">
+          <div class="panel-title"><h2>Pedidos</h2><button class="btn secondary" onclick="renderOrders()">Atualizar</button></div>
+          <div class="card table-wrap"><table class="table"><thead><tr><th>Nº</th><th>Cliente</th><th>Serviço</th><th>Data</th><th>Estado</th><th>Pagamento</th><th>Ação</th></tr></thead><tbody id="ordersRows"></tbody></table></div>
+        </section>
+        <section id="view-files" class="hidden">
+          <h2>Documentos recebidos</h2><div class="card" id="filesArea"><div class="empty">Ainda não há documentos finalizados.</div></div>
+        </section>
+        <section id="view-payments" class="hidden">
+          <h2>Pagamentos</h2><div class="notice">Métodos previstos: Multicaixa Express, transferência bancária e pagamento presencial. Os dados oficiais da gráfica serão adicionados antes da publicação.</div>
+          <div class="card"><h3>Enviar comprovativo</h3><div class="field"><label>Número do pedido</label><input id="paymentOrder" placeholder="Ex.: PG-0001"></div><div class="field"><label>Método</label><select id="paymentMethod"><option>Multicaixa Express</option><option>Transferência bancária</option><option>Pagamento presencial</option></select></div><div class="field"><label>Comprovativo (opcional nesta demonstração)</label><input type="file" id="paymentProof"></div><button class="btn" onclick="submitPayment()">Registar pagamento</button></div>
+          <div class="card" style="margin-top:14px"><h3>Registos</h3><div id="paymentList" class="small muted">Sem pagamentos registados.</div></div>
+        </section>
+        <section id="view-chat" class="hidden">
+          <h2>Atendimento</h2><div class="notice">Cada cliente terá um funcionário responsável, atribuído automaticamente. O administrador poderá alterar a atribuição.</div>
+          <div class="card"><div id="chatMessages" class="chatbox"></div><div class="field"><label>Mensagem</label><div class="action-row"><input id="chatInput" style="flex:1;min-width:160px" placeholder="Escreve uma mensagem..."><button class="btn" onclick="sendMessage()">Enviar</button></div></div></div>
+        </section>
+        <section id="view-services" class="hidden">
+          <div class="panel-title"><h2>Serviços e preços</h2><button class="btn" onclick="addService()" id="addServiceBtn">Adicionar serviço</button></div><div class="notice">Os preços reais ainda serão organizados a partir das tabelas fornecidas. Não foram inventados valores.</div>
+          <div class="card table-wrap"><table class="table"><thead><tr><th>Serviço</th><th>Descrição</th><th>Preço (AOA)</th><th>Visibilidade</th></tr></thead><tbody id="serviceRows"></tbody></table></div>
+        </section>
+        <section id="view-staff" class="hidden">
+          <h2>Equipa e atribuições</h2><div class="notice">A atribuição automática distribuirá clientes entre funcionários disponíveis. O administrador pode mudar o responsável. Todos os funcionários podem consultar os pedidos; ações administrativas e financeiras ficam protegidas.</div>
+          <div class="card"><h3>Funcionários</h3><div id="staffList" class="small muted">Ainda não foram registados funcionários.</div><div class="field"><label>Adicionar funcionário (demonstração)</label><input id="staffName" placeholder="Nome do funcionário"></div><button class="btn" onclick="addStaff()">Adicionar</button></div>
+        </section>
+        <section id="view-reports" class="hidden">
+          <h2>Relatórios</h2><p class="muted small">Relatórios diários e mensais. Apenas pagamentos confirmados entram no total recebido.</p>
+          <div class="stats" id="reportStats"></div><div class="card" style="margin-top:14px"><div class="action-row"><button class="btn" onclick="printReport('diário')">Descarregar relatório diário em PDF</button><button class="btn secondary" onclick="printReport('mensal')">Descarregar relatório mensal em PDF</button></div><p class="small muted">Será aberta a janela de impressão do navegador. Escolhe “Guardar como PDF”.</p></div>
+        </section>
+        <section id="view-settings" class="hidden">
+          <h2>Configurações</h2><div class="card"><div class="field"><label>Nome da gráfica</label><input value="PRO GRÁFICA" disabled></div><div class="field"><label>Número oficial de WhatsApp (a preencher)</label><input id="waNumber" placeholder="2449XXXXXXXX"></div><div class="field"><label>Localização / endereço</label><input id="shopAddress" placeholder="Morada da gráfica"></div><div class="field"><label>Horário de funcionamento</label><input id="shopHours" placeholder="Ex.: segunda a sábado, 08h–18h"></div><button class="btn" onclick="saveSettings()">Guardar nesta demonstração</button></div>
+        </section>
+        <section id="view-ads" class="hidden">
+          <h2>Publicidade e promoções</h2><div class="card"><div class="field"><label>Título da promoção</label><input id="adTitle" placeholder="Ex.: Promoção de impressão"></div><div class="field"><label>Mensagem</label><textarea id="adText" rows="3"></textarea></div><button class="btn" onclick="publishAd()">Publicar promoção</button><div id="adsList" class="small muted" style="margin-top:12px"></div></div>
+        </section>
+      </div>
+    </div>
+  </section>
+  <div class="footer">PRO GRÁFICA · Portal de demonstração · Angola<br>Versão inicial para organizar e testar antes da publicação.</div>
+</main>
+<a class="wa" href="#" onclick="contactWhatsApp(event)">WhatsApp</a>
+</div>
+  <script src="app.js"></script>
+</body>
+</html>
